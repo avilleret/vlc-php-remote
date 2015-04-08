@@ -52,7 +52,6 @@ img {
 			$name = str_replace("_"," ",$_GET["dir"]);
 	 		$dir = 'data/'.$_GET["dir"].'/';
 		 	$files = array_diff(scandir($dir),array('..','.','face.jpg'));
-
 /*
 			echo "<script>";
 		 	echo 	"xmlhttp = new XMLHttpRequest();\n";
@@ -85,6 +84,9 @@ img {
 		 			//echo  '<a href=# onClick="play()"><img src="'.$dir.'face.jpg" width="300"/></a>';
 		 			//echo "\n<figcaption>".$filename."</figcaption>\n";
 		 			//echo "</figure>\n";
+		 		} else if ( $ext === 'wav' )
+		 		{
+		 			shell_exec('echo "audio '. getcwd() . '/' . $dir . $value .'" | pdsend 9999 localhost udp');
 		 		}
 		 		// echo '<a href=# onClick=play("/home/antoine/Documents/test.mp3")><img src="'.$dir.'/face.jpg" width="300"/></a>';
 		 	}

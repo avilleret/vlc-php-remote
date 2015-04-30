@@ -99,7 +99,8 @@
 		 			echo '</div>';
 		 		}
 		 	}
-
+		 	
+		 	shell_exec('echo "video '. getcwd() . '/' . $dir . 'V1.mov" | pdsend 8888 localhost udp');
 		 	shell_exec('echo "audio '. getcwd() . '/' . $dir . 'son.wav" | pdsend 9999 localhost udp');
 
 	 	?>

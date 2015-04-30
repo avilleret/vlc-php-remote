@@ -1,55 +1,44 @@
 <!DOCTYPE html>
+<?php
+			$name = substr($_GET["dir"], 3);
+			$name = str_replace("_"," ",$name);
+	 		$dir = 'data/'.$_GET["dir"].'/';
+		 	$files = array_diff(scandir($dir),array('..','.','face.jpg'));
+?>
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Les Futurs de l'écrit</title>
+	<?php echo '<title>' . $name . '</title>'; ?> 
+	<link rel="stylesheet" type="text/css" href="visagessonores.css">
 </head>
-<style>
-header {
-    background-color:black;
-    color:white;
-    text-align:center;
-    padding:5px; 
-}
-nav {
-    line-height:30px;
-    background-color:#eeeeee;
-    height:300px;
-    width:100px;
-    float:left;
-    padding:5px; 
-}
-section {
-    width:350px;
-    float:left;
-    padding:10px; 
-}
-footer {
-    background-color:black;
-    color:white;
-    clear:both;
-    text-align:center;
-    padding:5px; 
-}
-img {
-	width:300px;
-	padding:10px;
-}
-</style>
 
 <script>
  	xmlhttp = new XMLHttpRequest();
-		function play(file){;
+ 	xmlhttp2 = new XMLHttpRequest();
+	function play(video, audio){
 		// we can't call directly VLC command here since Javascript security setting
 		// does not allow xmlhttp to send something to a foreign server
-		xmlhttp.open("GET",  "play.php?media="+ file, true);
-		xmlhttp.send();
+		if ( video  ){
+			xmlhttp.open("GET",  "play.php?video="+ video, true);
+			xmlhttp.send();
+		}
+
+		if ( audio ){
+		 	xmlhttp2.open("GET",  "play.php?audio="+ audio, true);
+		 	xmlhttp2.send();
+		}
 	}
 </script>
 <body>
 
+<div id="header">
+ 	<?php echo '<h1>' . $name . '</h1>'; ?>
+</div>
+
+<div id="section" max-width="650px">
+
 		<?php
-			$name = str_replace("_"," ",$_GET["dir"]);
+			// $name = str_replace("_"," ",$_GET["dir"]);
 	 		$dir = 'data/'.$_GET["dir"].'/';
 		 	$files = array_diff(scandir($dir),array('..','.','face.jpg'));
 /*
@@ -62,9 +51,6 @@ img {
 			echo	"\nxmlhttp.send();}\n";
 			echo '</script>';
 */
-
-
-		 	echo "<header><h1>".$name."</h1></header>\n";
 
 		 	foreach ( $files as $value )
 		 	{
@@ -80,17 +66,43 @@ img {
 		 			// echo 'Found a video : ' . $value . '</br>';
 		 			// echo "<figure>\n";
 		 			// echo $value;
-		 			echo  '<a href=# id="vid" onclick="play(\'' . getcwd() . '/' . $dir . $value . '\')"><img src="'.$dir.$filename.'.jpg"/></a>';
+		 			echo '<div class="box2">';
+
+		 			$video = "'" . getcwd() . "/" . $dir . $value . "'";
+		 			// echo $video;
+		 			$audio = "'bang'";
+		 			if ( $filename == 'V4' ){
+		 				$audio = "'" . getcwd() . "/" . $dir . "texte.wav'";
+		 			}
+		 			// echo $audio;
+
+					echo '<a href=# id="vid" onclick="play('. $video .', '. $audio . ')">';
+					echo "\n";
+
+		 			// echo '<a href=# id="vid" onclick="play(\'' . getcwd() . '/' . $dir . $value . '\' )">';
+		 			echo '<img width="300px" src="'.$dir.$filename.'.jpg"/></a>';
+		 			echo "\n";
 		 			//echo  '<a href=# onClick="play()"><img src="'.$dir.'face.jpg" width="300"/></a>';
-		 			//echo "\n<figcaption>".$filename."</figcaption>\n";
-		 			//echo "</figure>\n";
-		 		} else if ( $ext === 'wav' )
-		 		{
-		 			shell_exec('echo "audio '. getcwd() . '/' . $dir . $value .'" | pdsend 9999 localhost udp');
+		 			echo '<h2>';
+		 			if ( $filename == 'V1'){
+		 				echo "Première écoute";
+		 			} elseif ( $filename == 'V2' ){
+		 				echo "Deuxième écoute";
+		 			} elseif ( $filename == 'V3' ){
+		 				echo "Troisième écoute";
+		 			} elseif ( $filename == 'V4' ){
+		 				echo "Écoute intérieure";
+		 			}
+		 			echo '</h2>';
+		 			echo "\n";
+
+		 			echo '</div>';
 		 		}
-		 		// echo '<a href=# onClick=play("/home/antoine/Documents/test.mp3")><img src="'.$dir.'/face.jpg" width="300"/></a>';
 		 	}
 
+		 	shell_exec('echo "audio '. getcwd() . '/' . $dir . 'son.wav" | pdsend 9999 localhost udp');
+
 	 	?>
+	 	</div>
 	 	<h1><a href=index.php>Retour</a></h1>
 </body>

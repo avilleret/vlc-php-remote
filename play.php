@@ -1,19 +1,29 @@
 <!--
-	This script send 2 commands to VLC :
-	- first to empty the playlist 
-	- and then to play the media passed by "media" tag.
-	I.E. to play test.mp3 just open in a browser : 
-	play.php?media=test.mp3
+	This script send commands to Puredata :
+	to play the media passed by "video" or "audio" tag.
+	play.php?video=video.mp4
+	play.php?audio=sound.wav
 
 	You can specify an absolute or relative path to media. 
 -->
 
 <?php
 echo "Hello world !\n";
-echo $_GET["media"];
-// echo "<h1>empty playlist</h1>";
-// echo file_get_contents('http://127.0.0.1:8080/requests/status.json?command=pl_empty');
-// echo '<h1>play</h1></br>';
-shell_exec('echo "video '.$_GET["media"].'" | pdsend 8888 localhost udp')
-///echo file_get_contents('http://:lua@127.0.0.1:8080/requests/status.json?command=in_play&input=' . $_GET["media"] );
+$video = $_GET["video"];
+$audio = $_GET["audio"];
+
+if ( $video != "" ){
+	echo "You pass a video as argument !";
+	shell_exec('echo "video '.$video.'" | pdsend 8888 localhost udp');
+} else {
+	echo "you don't pass video as argument !";
+}
+
+
+if ( $audio != "" ){
+	echo "You pass an audio file as argument !";
+	shell_exec('echo "audio2 '.$audio.'" | pdsend 9999 localhost udp');
+} else {
+	echo "you don't pass any audio file as argument !";
+}
 ?>

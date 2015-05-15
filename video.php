@@ -72,7 +72,7 @@
 		 			// echo $video;
 		 			$audio = "'bang'";
 		 			if ( $filename == 'V4' ){
-		 				$audio = "'" . getcwd() . "/" . $dir . "texte.wav'";
+		 				$audio = "'" . getcwd() . "/" . $dir . "text.wav'";
 		 			}
 		 			// echo $audio;
 

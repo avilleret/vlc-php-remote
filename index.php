@@ -26,7 +26,7 @@
 				echo '<a href="video.php?dir=' . $value . '">' ;
 				echo '<img width="120px" src="data/'.$value.'/'.$value.'.jpg" /></a>';
 				$caption = substr($value, 3);
-				$caption = str_replace("_"," ",$caption);
+				$caption = str_replace("_","<br>",$caption);
 
 				// uncomment the next line to display Surname and Name
 				//$caption_list = explode("_",$value);

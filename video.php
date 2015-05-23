@@ -35,7 +35,7 @@
  	<?php echo '<h1>' . $name . '</h1>'; ?>
 </div>
 
-<div id="section" max-width="650px">
+<div id="section" width="1200px">
 
 		<?php
 			// $name = str_replace("_"," ",$_GET["dir"]);
@@ -61,7 +61,7 @@
 		 		// echo 'extension : ' . $ext . '</br>' ;
 		 		// echo 'basename : ' . $filename . '</br>';
 		 		// print_r($ext);
-		 		if ( $ext === 'mov' || $ext === 'mp4' )
+		 		if ( ($ext === 'mov' || $ext === 'mp4') && $filename{0} !== '.' ) 
 		 		{
 		 			// echo 'Found a video : ' . $value . '</br>';
 		 			// echo "<figure>\n";
@@ -80,7 +80,7 @@
 					echo "\n";
 
 		 			// echo '<a href=# id="vid" onclick="play(\'' . getcwd() . '/' . $dir . $value . '\' )">';
-		 			echo '<img width="300px" src="'.$dir.$filename.'.jpg"/></a>';
+		 			echo '<img width="200px" src="'.$dir.$filename.'.jpg"/></a>';
 		 			echo "\n";
 		 			//echo  '<a href=# onClick="play()"><img src="'.$dir.'face.jpg" width="300"/></a>';
 		 			echo '<h2>';
